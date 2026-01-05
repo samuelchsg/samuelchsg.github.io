@@ -1,23 +1,23 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const skillSection = document.getElementById("skills");
-  const skillLevels = document.querySelectorAll(".skill-level");
+document.addEventListener("DOMContentLoaded", () => {
+  const skillsSection = document.getElementById("skills");
+  const skillBars = document.querySelectorAll(".skill-level");
+  let animated = false;
 
-  function fillSkills() {
-    const sectionTop = skillSection.getBoundingClientRect().top;
+  function animateSkills() {
+    const sectionTop = skillsSection.getBoundingClientRect().top;
     const windowHeight = window.innerHeight;
 
-    if (sectionTop < windowHeight * 0.85) {
-      skillLevels.forEach((bar, i) => {
+    if (!animated && sectionTop < windowHeight * 0.85) {
+      skillBars.forEach((bar, index) => {
         const level = bar.getAttribute("data-level");
         setTimeout(() => {
           bar.style.width = level;
-        }, i * 150); // stagger effect
+        }, index * 120);
       });
-
-      window.removeEventListener("scroll", fillSkills);
+      animated = true;
     }
   }
 
-  window.addEventListener("scroll", fillSkills);
-  fillSkills(); // in case section is already visible
+  window.addEventListener("scroll", animateSkills);
+  animateSkills();
 });
